@@ -1,0 +1,15 @@
+// Display Ports
+@import '../../assets/styles/_variables/displays.scss';
+
+.Layout {
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+// Phones
+@media only screen and (max-width: $phone) {
+	.Layout {
+		max-width: 100%;
+		margin: 0;
+	}
+}

@@ -1,0 +1,25 @@
+// Colors
+@import '../../assets/styles/_variables/colors.scss';
+
+.Footer {
+	background: $color-accent;
+	color: $color-white;
+	padding: 1rem;
+
+	.Inner {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		img {
+			max-width: 100%;
+			height: 150px;
+		}
+
+		h2 {
+			font-style: normal;
+			font-weight: bold;
+		}
+	}
+}
