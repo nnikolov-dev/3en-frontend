@@ -31,7 +31,7 @@ const Product = ({pageContext: {product, apiURL, companyDetails: {phone, name: c
 		</div>
 		<div className="footer">
 			<Footer>
-				<img src={logo} alt={companyName} />
+				<img src={`.${logo}`} alt={companyName} />
 				<ul>
 					<li><h2>{companyName}</h2></li>
 					{address.split(', ').map((addressLine) => <li>{addressLine}</li>)}

@@ -1,16 +1,11 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import ScrollAnimation from 'react-animate-on-scroll'
 
 import Header from '../components/Header'
-import Icon from '../components/Icon'
 import Layout from '../components/Layout'
 import Product from '../components/Product'
 import Footer from '../components/Footer'
 
-import bottleIcon from '../assets/images/bottle.svg'
-import butterIcon from '../assets/images/butter.svg'
-import yoghurtIcon from '../assets/images/yoghurt.svg'
 import '../assets/styles/style.scss'
 import 'animate.css/animate.min.css'
 
@@ -25,7 +20,7 @@ const Home = (
 ) => (
 	<>
 		<div className="main-content">
-			<Header><img src={logo} alt={companyName} /></Header>
+			<Header><img src={`.${logo}`} alt={companyName} /></Header>
 			{/* <section className="icons">
 				<ScrollAnimation animateIn="fadeInLeft" animateOnce><Icon name="Bottle" image={yoghurtIcon} /></ScrollAnimation>
 				<ScrollAnimation animateIn="fadeInUp" animateOnce><Icon name="Bottle" image={bottleIcon} /></ScrollAnimation>
@@ -51,7 +46,7 @@ const Home = (
 		</div>
 		<div className="footer">
 			<Footer>
-				<img src={logo} alt={companyName} />
+				<img src={`.${logo}`} alt={companyName} />
 				<ul>
 					<li><h2>{companyName}</h2></li>
 					{address.split(', ').map((addressLine) => <li>{addressLine}</li>)}

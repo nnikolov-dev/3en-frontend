@@ -1,9 +1,6 @@
 // Colors
 @import '../../assets/styles/_variables/colors.scss';
 
-// Variables
-$control-size: 30px;
-
 .Carousel {
 	display: flex;
 	flex-direction: column;
@@ -51,9 +48,9 @@ $control-size: 30px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			top: calc(50% - $control-size);
-			width: $control-size;
-			height: $control-size;
+			top: calc(50% - 30px);
+			width: 30px;
+			height: 30px;
 			background: rgb(255, 255, 255);
 			opacity: 0.5;
 			border-radius: 50%;
