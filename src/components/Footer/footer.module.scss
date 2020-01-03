@@ -1,6 +1,9 @@
 // Colors
 @import '../../assets/styles/_variables/colors.scss';
 
+// Display Ports
+@import '../../assets/styles/_variables/displays.scss';
+
 .Footer {
 	background: $color-accent;
 	color: $color-white;
@@ -9,17 +12,38 @@
 	.Inner {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
 
-		img {
-			max-width: 100%;
-			height: 150px;
+		ul {
+			border-left: 1px solid rgba(255, 255, 255, 0.3);
+			padding-left: 3rem;
 		}
 
-		h2 {
-			font-style: normal;
-			font-weight: bold;
+		img {
+			width: 100px;
+			margin-right: 3rem;
+		}
+
+		p {
+			font-weight: lighter;
+		}
+	}
+}
+
+// Phones
+@media only screen and (max-width: $phone) {
+	.Footer {
+
+		.Inner {
+			flex-wrap: wrap;
+
+			ul {
+				border: 0;
+				padding: 0;
+			}
+
+			p {
+				margin: 0;
+			}
 		}
 	}
 }

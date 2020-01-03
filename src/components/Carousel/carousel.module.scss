@@ -1,0 +1,122 @@
+// Colors
+@import '../../assets/styles/_variables/colors.scss';
+
+// Variables
+$control-size: 30px;
+
+.Carousel {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+
+	.ImageHolder {
+		position: relative;
+		width: 100%;
+		height: 300px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.Image {
+			flex: 1;
+			position: absolute;
+			width: 100%;
+			height: inherit;
+			display: flex;
+			justify-content: center;
+			z-index: 1;
+			background: gray;
+
+			img {
+				width: 100%;
+				height: inherit;
+				object-fit: cover;	
+			}
+		}
+
+		.Visible {
+			animation: animationIn 1s;
+			z-index: 2;
+		}
+
+		.Invisible {
+			animation: animationOut 1s;
+			z-index: 1;
+		}
+
+		.Left, .Right {
+			position: absolute;
+			content: '';
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			top: calc(50% - $control-size);
+			width: $control-size;
+			height: $control-size;
+			background: rgb(255, 255, 255);
+			opacity: 0.5;
+			border-radius: 50%;
+			padding: 0.5rem;
+			z-index: 3;
+			transition: 0.5s;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 1;		
+				box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+			}
+
+			&::after {
+				content: '';
+				width: 100%;
+				height: 100%;
+				background: $color-accent-dark;
+				clip-path: polygon(0 0, 0 100%, 100% 50%);
+			}
+		}
+
+		.Left {
+			left: 10px;
+			transform: scaleX(-1);
+		}
+
+		.Right {
+			right: 10px;
+		}
+	}
+
+	.Controls {
+		display: flex;
+		justify-content: center;
+		margin-top: 1rem;
+
+		.Bar {
+			content: '';
+			width: 30px;
+			height: 10px;
+			background: $color-bg;
+			border-radius: 3px;
+			margin-left: 0.5rem;
+			cursor: pointer;
+
+			&:first-of-type {
+				margin-left: 0;
+			}
+		}
+
+		.Filled {
+			background: $color-primary;
+		}
+	}
+}
+
+@keyframes animationIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes animationOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}

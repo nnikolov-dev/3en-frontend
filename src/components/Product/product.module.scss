@@ -1,6 +1,8 @@
+// Display Ports
+@import '../../assets/styles/_variables/displays.scss';
+
 .Product {
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 
@@ -35,11 +37,17 @@
 			position: absolute;
 			display: flex;
 			justify-content: center;
-			align-items: center;
+			align-items: flex-end;
 			width: 100%;
 			background: #D0D0D0;
 			height: 100%;
 			z-index: 5;
+
+			img {
+				min-width: 100%;
+				height: 100%;
+				margin-bottom: 0;
+			}
 		}
 
 		.Shadow {
@@ -62,6 +70,24 @@
 	.Description {
 		width: calc(60% - 3rem);
 		margin-left: 3rem;
-		font-style: italic;
+	}
+}
+
+// Phones
+@media only screen and (max-width: $phone) {
+	.Product {
+		flex-direction: column;
+
+		&:nth-of-type(even) {
+			flex-direction: column;
+	
+			.Description {
+				margin-right: 0;
+			}
+		}
+
+		.Description {
+			margin-left: 0;
+		}
 	}
 }

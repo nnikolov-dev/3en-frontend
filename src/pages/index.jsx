@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import '../assets/styles/style.scss'
+import {graphql} from 'gatsby'
+import ScrollAnimation from 'react-animate-on-scroll'
 
 import Header from '../components/Header'
 import Icon from '../components/Icon'
@@ -8,93 +8,108 @@ import Layout from '../components/Layout'
 import Product from '../components/Product'
 import Footer from '../components/Footer'
 
-import facebookIcon from '../assets/images/facebook.svg'
-import linkedInIcon from '../assets/images/linkedin.svg'
 import bottleIcon from '../assets/images/bottle.svg'
 import butterIcon from '../assets/images/butter.svg'
 import yoghurtIcon from '../assets/images/yoghurt.svg'
-import mapImage from '../assets/images/map.png'
+import '../assets/styles/style.scss'
+import 'animate.css/animate.min.css'
 
-const navLinks = [
-	{
-		name: 'Home',
-		address: '#!',
-		active: true,
-	},
-	{
-		name: 'Link 1',
-		address: '#!',
-	},
-	{
-		name: 'Link 2',
-		address: '#!',
-	},
-	{
-		name: 'Link 3',
-		address: '#!',
-	},
-]
-
-const socialLinks = [
-	{
-		name: 'Facebook',
-		address: 'https://facebook.com',
-		image: facebookIcon,
-	},
-	{
-		name: 'LinkIn',
-		address: 'https://linkedin.com',
-		image: linkedInIcon,
-	},
-]
-
-const products = [
-	{
-		name: 'Product 1',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-		image: facebookIcon,
-	},
-	{
-		name: 'Product 1',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-		image: facebookIcon,
-	},
-	{
-		name: 'Product 1',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-		image: facebookIcon,
-	},
-]
-
-const Home = () => (
+const Home = (
+	{data:
+		{
+			strapiCompanyDetails: {phone, name: companyName, email, address, about, logo: {publicURL: logo}},
+			// allStrapiSocialMedia: {nodes: socialMedia},
+			allStrapiProduct: {edges: products},
+			sitePlugin: {pluginOptions: {apiURL}},
+		}},
+) => (
 	<>
-		<div className="content">
-			<Navbar links={navLinks} social={socialLinks} />
-			<Header />
-			<section className="icons">
-				<Icon name="Bottle" image={yoghurtIcon} />
-				<Icon name="Bottle" image={bottleIcon} />
-				<Icon name="Bottle" image={butterIcon} />
+		<div className="main-content">
+			<Header><img src={logo} alt={companyName} /></Header>
+			{/* <section className="icons">
+				<ScrollAnimation animateIn="fadeInLeft" animateOnce><Icon name="Bottle" image={yoghurtIcon} /></ScrollAnimation>
+				<ScrollAnimation animateIn="fadeInUp" animateOnce><Icon name="Bottle" image={bottleIcon} /></ScrollAnimation>
+				<ScrollAnimation animateIn="fadeInRight" animateOnce><Icon name="Bottle" image={butterIcon} /></ScrollAnimation>
+      </section> */}
+			<section className="about">
+				<Layout>
+					<h1>{about}</h1>
+				</Layout>
 			</section>
 			<section className="products">
 				<Layout>
-					{products.map(({name, description, image}) => <Product name={name} description={description} image={image} />)}
+					{products.map(({node: product}) => (
+						<Product
+							slug={product.slug}
+							name={product.name}
+							description={product.description}
+							image={`${apiURL}${product.media[0].url}`}
+						/>
+					))}
 				</Layout>
 			</section>
 		</div>
 		<div className="footer">
 			<Footer>
+				<img src={logo} alt={companyName} />
 				<ul>
-					<li><h2>Company Name</h2></li>
-					<li>Address Line One</li>
-					<li>Address Line Two</li>
-					<li>Address Line Three</li>
-					<li>+49888888888</li>
+					<li><h2>{companyName}</h2></li>
+					{address.split(', ').map((addressLine) => <li>{addressLine}</li>)}
+					<li>{phone}</li>
+					<li>{email}</li>
 				</ul>
-				<img src={mapImage} alt="map" />
 			</Footer>
 		</div>
 	</>
 )
-
 export default Home
+export const localQuery = graphql`
+query strapiQuery {
+  sitePlugin(name: {eq: "gatsby-source-strapi"}) {
+    pluginOptions {
+      apiURL
+    }
+  }
+  allStrapiProduct {
+    edges {
+      node {
+        media {
+          url
+          name
+        }
+        enable
+        id
+        description
+        name
+        product_category {
+          icon {
+            name
+            url
+          }
+          name
+        }
+        slug
+      }
+    }
+  }
+  strapiCompanyDetails {
+    phone
+    name
+    email
+    about
+    address
+    logo {
+      publicURL
+    }
+  }
+  allStrapiSocialMedia {
+    nodes {
+      name
+      address
+      icon {
+        publicURL
+      }
+    }
+  }
+}
+`
