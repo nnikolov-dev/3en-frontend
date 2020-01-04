@@ -5,18 +5,9 @@ exports.createPages = async ({graphql, actions}) => {
 	const productTemplate = path.resolve('./src/templates/product.jsx')
 	return graphql(`
 	query strapiQuery {
-		sitePlugin(name: {eq: "gatsby-source-strapi"}) {
-		  pluginOptions {
-			apiURL
-		  }
-		}
 		allStrapiProduct {
 		  edges {
 			node {
-			  media {
-				url
-				name
-			  }
 			  enable
 			  id
 			  description
@@ -24,15 +15,16 @@ exports.createPages = async ({graphql, actions}) => {
 			  product_category {
 				icon {
 				  name
-				  url
+				  publicURL
 				}
 				name
 			  }
 			  slug
-			  brand {
-				name
-				country
-				website
+			  media {
+				localFile {
+				  publicURL
+				  name
+				}
 			  }
 			}
 		  }
@@ -42,8 +34,11 @@ exports.createPages = async ({graphql, actions}) => {
 		  name
 		  email
 		  address
+		  about
 		  logo {
 			publicURL
+			sourceInstanceName
+			absolutePath
 		  }
 		}
 		allStrapiSocialMedia {
@@ -55,13 +50,12 @@ exports.createPages = async ({graphql, actions}) => {
 			}
 		  }
 		}
-	  }	  
+	  }
 `).then((result) => {
 		if (result.errors) {
 			throw result.errors
 		}
 		const products = result.data.allStrapiProduct.edges
-		const {apiURL} = result.data.sitePlugin.pluginOptions
 		const companyDetails = result.data.strapiCompanyDetails
 		products.forEach(({node: product}) => {
 			createPage({
@@ -69,7 +63,6 @@ exports.createPages = async ({graphql, actions}) => {
 				component: productTemplate,
 				context: {
 					product,
-					apiURL,
 					companyDetails,
 				},
 			})

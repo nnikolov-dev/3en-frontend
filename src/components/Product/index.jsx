@@ -8,7 +8,7 @@ const Product = ({slug, name, description, image}) => (
 		<div className={styles.ImageHolder}>
 			{/* <ScrollAnimation animateIn="fadeIn" animateOnce> */}
 			<div className={styles.Image}>
-				<img src={image} alt={name} />
+				<img src={`.${image}`} alt={name} />
 			</div>
 			<div className={styles.Shadow} />
 			<div className={styles.Shadow} />
@@ -19,7 +19,7 @@ const Product = ({slug, name, description, image}) => (
 			<p>{description}</p>
 			{/* </ScrollAnimation> */}
 			{/* <ScrollAnimation animateIn="fadeInUp" animateOnce> */}
-			<Button href={`/product/${slug}`}>More</Button>
+			<Button href={`./product/${slug}`}>More</Button>
 			{/* </ScrollAnimation> */}
 		</div>
 	</div>

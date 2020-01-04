@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+	pathPrefix: '/3en-frontend',
 	siteMetadata: {
 		title: '3EH',
 		description: '3EH Website',
@@ -33,7 +34,7 @@ module.exports = {
 		{
 			resolve: 'gatsby-source-strapi',
 			options: {
-				apiURL: 'http://localhost:1337',
+				apiURL: 'https://serene-falls-66604.herokuapp.com',
 				queryLimit: 1000,
 				contentTypes: ['product', 'company-details', 'social-media'],
 				loginData: {

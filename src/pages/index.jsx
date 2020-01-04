@@ -15,7 +15,6 @@ const Home = (
 			strapiCompanyDetails: {phone, name: companyName, email, address, about, logo: {publicURL: logo}},
 			// allStrapiSocialMedia: {nodes: socialMedia},
 			allStrapiProduct: {edges: products},
-			sitePlugin: {pluginOptions: {apiURL}},
 		}},
 ) => (
 	<>
@@ -38,7 +37,7 @@ const Home = (
 							slug={product.slug}
 							name={product.name}
 							description={product.description}
-							image={`${apiURL}${product.media[0].url}`}
+							image={`${product.media[0].localFile.publicURL}`}
 						/>
 					))}
 				</Layout>
@@ -60,18 +59,9 @@ const Home = (
 export default Home
 export const localQuery = graphql`
 query strapiQuery {
-  sitePlugin(name: {eq: "gatsby-source-strapi"}) {
-    pluginOptions {
-      apiURL
-    }
-  }
   allStrapiProduct {
     edges {
       node {
-        media {
-          url
-          name
-        }
         enable
         id
         description
@@ -79,11 +69,17 @@ query strapiQuery {
         product_category {
           icon {
             name
-            url
+            publicURL
           }
           name
         }
         slug
+        media {
+          localFile {
+            publicURL
+            name
+          }
+        }
       }
     }
   }
@@ -91,10 +87,12 @@ query strapiQuery {
     phone
     name
     email
-    about
     address
+    about
     logo {
       publicURL
+      sourceInstanceName
+      absolutePath
     }
   }
   allStrapiSocialMedia {

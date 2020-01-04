@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 import Icon from '../components/Icon'
 import Carousel from '../components/Carousel'
 
-const Product = ({pageContext: {product, apiURL, companyDetails: {phone, name: companyName, email, address, logo: {publicURL: logo}}}}) => (
+const Product = ({pageContext: {product, companyDetails: {phone, name: companyName, email, address, logo: {publicURL: logo}}}}) => (
 	<div className="main-content">
 		<div className="product">
 			<div className="container">
@@ -15,11 +15,11 @@ const Product = ({pageContext: {product, apiURL, companyDetails: {phone, name: c
 							<div className="perks">
 								<Icon
 									name={product.product_category.name}
-									image={`${apiURL}/${product.product_category.icon.url}`}
+									image={`../..${product.product_category.icon.publicURL}`}
 								/>
 							</div>
 							<div className="slideshow">
-								<Carousel images={product.media.map(({name, url}) => ({address: `${apiURL}/${url}`, alt: name}))} />
+								<Carousel images={product.media.map(({localFile: {publicURL, name}}) => ({address: `../..${publicURL}`, alt: name}))} />
 							</div>
 							<div className="description">
 								{product.description}
@@ -31,7 +31,7 @@ const Product = ({pageContext: {product, apiURL, companyDetails: {phone, name: c
 		</div>
 		<div className="footer">
 			<Footer>
-				<img src={`.${logo}`} alt={companyName} />
+				<img src={`../..${logo}`} alt={companyName} />
 				<ul>
 					<li><h2>{companyName}</h2></li>
 					{address.split(', ').map((addressLine) => <li>{addressLine}</li>)}
